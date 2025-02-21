@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Total Inventory</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h2>Edit Total Inventory</h2>
+    <form action="{{ url_for('update_total_inventory', id=inventory.id) }}" method="POST">
+        <label>OPS:</label>
+        <input type="text" name="OPS" value="{{ inventory.OPS }}" required><br>
+
+        <label>Team:</label>
+        <input type="text" name="Team" value="{{ inventory.Team }}" required><br>
+
+        <label>Customer Name:</label>
+        <input type="text" name="Customer_Name" value="{{ inventory.Customer_Name }}" required><br>
+
+        <label>Total Host Count:</label>
+        <input type="number" name="Total_Host_Count" value="{{ inventory.Total_Host_Count }}" required><br>
+
+        <label>Citrix MGMT Server:</label>
+        <input type="text" name="Citrix_MGMT_Server" value="{{ inventory.Citrix_MGMT_Server }}"><br>
+
+        <label>Total VDIs:</label>
+        <input type="number" name="Total_VDIs" value="{{ inventory.Total_VDIs }}" required><br>
+
+        <label>Total Managed:</label>
+        <input type="number" name="Total_Managed" value="{{ inventory.Total_Managed }}"><br>
+
+        <label>VDI Patch Completed:</label>
+        <input type="number" name="VDI_Patch_Completed" value="{{ inventory.VDI_Patch_Completed }}"><br>
+
+        <label>Host Patch Completed:</label>
+        <input type="number" name="Host_Patch_Completed" value="{{ inventory.Host_Patch_Completed }}"><br>
+
+        <label>MGMT Server Patch:</label>
+        <input type="number" name="MGMT_Server_Patch" value="{{ inventory.MGMT_Server_Patch }}"><br>
+
+        <label>Total Patch Completed:</label>
+        <input type="number" name="Total_Patch_Completed" value="{{ inventory.Total_Patch_Completed }}"><br>
+
+        <label>Pending MGMT:</label>
+        <input type="number" name="Pending_MGMT" value="{{ inventory.Pending_MGMT }}"><br>
+
+        <label>Pending VDI:</label>
+        <input type="number" name="Pending_VDI" value="{{ inventory.Pending_VDI }}"><br>
+
+        <label>Patch Pending Host:</label>
+        <input type="number" name="Patch_Pending_Host" value="{{ inventory.Patch_Pending_Host }}"><br>
+
+        <label>Total Pending:</label>
+        <input type="number" name="Total_Pending" value="{{ inventory.Total_Pending }}"><br>
+
+        <label>Q3 Status:</label>
+        <input type="text" name="Q3_Status" value="{{ inventory.Q3_Status }}"><br>
+
+        <label>Patching:</label>
+        <input type="text" name="Patching" value="{{ inventory.Patching }}"><br>
+
+        <button type="submit">Save</button>
+        <a href="{{ url_for('total_inventory') }}">Cancel</a>
+    </form>
+</body>
+</html>

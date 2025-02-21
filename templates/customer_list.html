@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ category }} Customers</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>{{ category }} Customers 
+        <button class="btn btn-primary" onclick="document.getElementById('addCustomerForm').style.display='block'">Add</button>
+    </h2>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>OPS</th>
+                <th>Team</th>
+                <th>Customer Name</th>
+                <th>Total Host Count</th>
+                <th>Citrix MGMT Server</th>
+                <th>Total VDI's</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[3] }}</td>
+                <td>{{ row[4] }}</td>
+                <td>{{ row[5] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <form id="addCustomerForm" method="post" style="display: none;">
+        <input type="text" name="OPS" placeholder="OPS" required>
+        <input type="text" name="Team" placeholder="Team" required>
+        <input type="text" name="Customer_Name" placeholder="Customer Name" required>
+        <input type="number" name="Total_Host_Count" placeholder="Total Host Count" required>
+        <input type="text" name="Citrix_MGMT_Server" placeholder="Citrix MGMT Server" required>
+        <input type="number" name="Total_VDIs" placeholder="Total VDIs" required>
+        <button type="submit">Save</button>
+    </form>
+</div>
+</body>
+</html>

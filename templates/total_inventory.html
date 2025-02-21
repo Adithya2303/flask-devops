@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Total Inventory</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .btn-container {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+        table {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Total Inventory</h2>
+
+    <div class="btn-container">
+        <button class="btn btn-success" onclick="openAddModal()">+ Add</button>
+    </div>
+
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>OPS</th>
+                <th>Team</th>
+                <th>Customer Name</th>
+                <th>Total Host Count</th>
+                <th>Citrix MGMT Server</th>
+                <th>Total VDIs</th>
+                <th>Total Managed</th>
+                <th>VDI Patch Completed</th>
+                <th>Host Patch Completed</th>
+                <th>MGMT Server Patch</th>
+                <th>Total Patch Completed</th>
+                <th>Pending MGMT</th>
+                <th>Pending VDI</th>
+                <th>Patch Pending Host</th>
+                <th>Total Pending</th>
+                <th>Q3 Status</th>
+                <th>Patching</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="inventory-table">
+            {% for row in data %}
+            <tr>
+                <td>{{ row['OPS'] }}</td>
+                <td>{{ row['Team'] }}</td>
+                <td>{{ row['Customer_Name'] }}</td>
+                <td>{{ row['Total_Host_Count'] }}</td>
+                <td>{{ row['Citrix_MGMT_Server'] }}</td>
+                <td>{{ row['Total_VDIs'] }}</td>
+                <td>{{ row['Total_Managed'] }}</td>
+                <td>{{ row['VDI_Patch_Completed'] }}</td>
+                <td>{{ row['Host_Patch_Completed'] }}</td>
+                <td>{{ row['MGMT_Server_Patch'] }}</td>
+                <td>{{ row['Total_Patch_Completed'] }}</td>
+                <td>{{ row['Pending_MGMT'] }}</td>
+                <td>{{ row['Pending_VDI'] }}</td>
+                <td>{{ row['Patch_Pending_Host'] }}</td>
+                <td>{{ row['Total_Pending'] }}</td>
+                <td>{{ row['Q3_Status'] }}</td>
+                <td>{{ row['Patching'] }}</td>
+                <td>
+                    <a href="{{ url_for('edit_total_inventory', id=row['id']) }}" class="btn btn-primary">Edit</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+<!-- Add/Edit Modal -->
+<div id="inventoryModal" class="modal" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Add Inventory</h5>
+                <button type="button" class="btn-close" onclick="closeModal()"></button>
+            </div>
+            <div class="modal-body">
+                <form id="inventoryForm">
+                    <input type="hidden" id="inventoryId">
+                    
+                    <div class="mb-3"><label>OPS:</label><input type="text" class="form-control" id="OPS" required></div>
+                    <div class="mb-3"><label>Team:</label><input type="text" class="form-control" id="Team" required></div>
+                    <div class="mb-3"><label>Customer Name:</label><input type="text" class="form-control" id="Customer_Name" required></div>
+                    <div class="mb-3"><label>Total Host Count:</label><input type="number" class="form-control" id="Total_Host_Count" required></div>
+                    <div class="mb-3"><label>Citrix MGMT Server:</label><input type="text" class="form-control" id="Citrix_MGMT_Server"></div>
+                    <div class="mb-3"><label>Total VDIs:</label><input type="number" class="form-control" id="Total_VDIs"></div>
+                    <div class="mb-3"><label>Total Managed:</label><input type="number" class="form-control" id="Total_Managed"></div>
+                    <div class="mb-3"><label>VDI Patch Completed:</label><input type="number" class="form-control" id="VDI_Patch_Completed"></div>
+                    <div class="mb-3"><label>Host Patch Completed:</label><input type="number" class="form-control" id="Host_Patch_Completed"></div>
+                    <div class="mb-3"><label>MGMT Server Patch:</label><input type="number" class="form-control" id="MGMT_Server_Patch"></div>
+                    <div class="mb-3"><label>Total Patch Completed:</label><input type="number" class="form-control" id="Total_Patch_Completed"></div>
+                    <div class="mb-3"><label>Pending MGMT:</label><input type="number" class="form-control" id="Pending_MGMT"></div>
+                    <div class="mb-3"><label>Pending VDI:</label><input type="number" class="form-control" id="Pending_VDI"></div>
+                    <div class="mb-3"><label>Patch Pending Host:</label><input type="number" class="form-control" id="Patch_Pending_Host"></div>
+                    <div class="mb-3"><label>Total Pending:</label><input type="number" class="form-control" id="Total_Pending"></div>
+                    <div class="mb-3"><label>Q3 Status:</label><input type="text" class="form-control" id="Q3_Status"></div>
+                    <div class="mb-3"><label>Patching:</label><input type="text" class="form-control" id="Patching"></div>
+
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        loadInventory();
+    });
+    
+    function loadInventory() {
+        $.get("/get_total_inventory", function(data) {
+            let rows = '';
+            data.forEach(item => {
+                rows += `<tr>
+                    <td>${item.OPS}</td>
+                    <td>${item.Team}</td>
+                    <td>${item.Customer_Name}</td>
+                    <td>${item.Total_Host_Count}</td>
+                    <td>${item.Citrix_MGMT_Server}</td>
+                    <td>${item.Total_VDIs}</td>
+                    <td>${item.Total_Managed}</td>
+                    <td>${item.VDI_Patch_Completed}</td>
+                    <td>${item.Host_Patch_Completed}</td>
+                    <td>${item.MGMT_Server_Patch}</td>
+                    <td>${item.Total_Patch_Completed}</td>
+                    <td>${item.Pending_MGMT}</td>
+                    <td>${item.Pending_VDI}</td>
+                    <td>${item.Patch_Pending_Host}</td>
+                    <td>${item.Total_Pending}</td>
+                    <td>${item.Q3_Status}</td>
+                    <td>${item.Patching}</td>
+                    <td><button class="btn btn-warning" onclick="editInventory(${item.id})">Edit</button></td>
+                </tr>`;
+            });
+            $('#inventoryData').html(rows);
+        });
+    }
+    
+    function openAddModal() {
+        $("#modalTitle").text("Add Inventory");
+        $("#inventoryForm")[0].reset();
+        $("#inventoryModal").show();
+    }
+    
+    function closeModal() {
+        $("#inventoryModal").hide();
+    }
+    
+    $("#inventoryForm").submit(function(e) {
+        e.preventDefault();
+        const formData = {
+            OPS: $("#OPS").val(),
+            Team: $("#Team").val(),
+            Customer_Name: $("#Customer_Name").val(),
+            Total_Host_Count: $("#Total_Host_Count").val(),
+            Citrix_MGMT_Server: $("#Citrix_MGMT_Server").val(),
+            Total_VDIs: $("#Total_VDIs").val(),
+            Total_Managed: $("#Total_Managed").val(),
+            VDI_Patch_Completed: $("#VDI_Patch_Completed").val(),
+            Host_Patch_Completed: $("#Host_Patch_Completed").val(),
+            MGMT_Server_Patch: $("#MGMT_Server_Patch").val(),
+            Total_Patch_Completed: $("#Total_Patch_Completed").val(),
+            Pending_MGMT: $("#Pending_MGMT").val(),
+            Pending_VDI: $("#Pending_VDI").val(),
+            Patch_Pending_Host: $("#Patch_Pending_Host").val(),
+            Total_Pending: $("#Total_Pending").val(),
+            Q3_Status: $("#Q3_Status").val(),
+            Patching: $("#Patching").val()
+        };
+        
+        $.post("/add_total_inventory", formData, function() {
+            closeModal();
+            loadInventory();
+        });
+    });
+    </script>
+
+<script>
+$(document).ready(function() {
+    loadInventory();
+});
+
+function loadInventory() {
+    $.get("/get_total_inventory", function(data) {
+        let rows = '';
+        data.forEach(item => {
+            rows += `<tr>
+                <td>${item.OPS}</td>
+                <td>${item.Team}</td>
+                <td>${item.Customer_Name}</td>
+                <td>${item.Total_Host_Count}</td>
+                <td>${item.Citrix_MGMT_Server}</td>
+                <td>${item.Total_VDIs}</td>
+                <td>${item.Total_Managed}</td>
+                <td>${item.VDI_Patch_Completed}</td>
+                <td>${item.Host_Patch_Completed}</td>
+                <td>${item.MGMT_Server_Patch}</td>
+                <td>${item.Total_Patch_Completed}</td>
+                <td>${item.Pending_MGMT}</td>
+                <td>${item.Pending_VDI}</td>
+                <td>${item.Patch_Pending_Host}</td>
+                <td>${item.Total_Pending}</td>
+                <td>${item.Q3_Status}</td>
+                <td>${item.Patching}</td>
+                <td><a href="/edit_total_inventory/${item.id}" class="btn btn-primary">Edit</a></td>
+            </tr>`;
+        });
+        $('#inventory-table').html(rows);
+    });
+}
+</script>
+
+</body>
+</html>
